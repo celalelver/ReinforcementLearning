@@ -7,15 +7,15 @@ from keras.models import Sequential
 from keras.layers import Dense, Input
 from keras.optimizers import Adam
 
-# 📌 Önce Pygame başlatılıyor
+# 📌 Initialize Pygame
 pygame.init()
 
-# Oyun parametreleri
+# Game parameters
 width, height = 360, 360
 fps = 30
 white, black, red, blue, green = (255, 255, 255), (0, 0, 0), (255, 0, 0), (0, 0, 255), (0, 255, 0)
 
-# 📌 Pygame ekranını oluştur
+# 📌 Create Pygame screen
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("RL GAME")
 
@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.circle(self.image, red, self.rect.center, self.radius)
 
     def update(self, action):
-        keys = pygame.key.get_pressed()  # 📌 Pygame olaylarını düzgün işle
+        keys = pygame.key.get_pressed()  # 📌 Properly process Pygame events
         self.speedx = -4 if keys[pygame.K_LEFT] or action == 0 else 4 if keys[pygame.K_RIGHT] or action == 1 else 0
 
         self.rect.x += self.speedx
@@ -100,7 +100,7 @@ class DQLAgent:
 
 class Env:
     def __init__(self):
-        self.screen = screen  # 📌 Ekranı doğrudan kullan
+        self.screen = screen  # 📌 Directly use the screen
         self.all_sprite, self.enemy = pygame.sprite.Group(), pygame.sprite.Group()
         self.player = Player()
         self.all_sprite.add(self.player)
@@ -141,7 +141,7 @@ class Env:
             self.reward = 2
             self.clock.tick(fps)
 
-            # 📌 Pygame olaylarını yönet
+            # 📌 Handle Pygame events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
